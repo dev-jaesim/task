@@ -1,31 +1,36 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
-import * as lambda from 'aws-cdk-lib/aws-lambda';
+import { Runtime, FunctionUrlAuthType } from 'aws-cdk-lib/aws-lambda';
 
 export class JaeTaskStack extends cdk.Stack {
-  private fetchFeatureCollection: NodejsFunction;
 
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    this.createLambdaFunction();
-    this.addLambdaUrl();
+    // Create lambda functions.
+    const fetchFeatureCollection = this.createLambdaFunction('FetchFeatureCollectionLambda', './lib/lambda/index.js');
+    const returnTestData = this.createLambdaFunction('ReturnTestDataLambda', './lib/testLambda/index.js');
+    
+    // Add a URL to the lambda functions.
+    this.addLambdaUrl(fetchFeatureCollection, 'FunctionUrlFetchFeatureCollection');
+    this.addLambdaUrl(returnTestData, 'FunctionUrlReturnTestData');
   }
 
-  private createLambdaFunction() {
-    this.fetchFeatureCollection = new NodejsFunction(this, 'FetchFeatureCollectionLambda', {
-      runtime: lambda.Runtime.NODEJS_18_X,
-      entry: './lib/lambda/index.js',
+  // Create a Node.js lambda function.
+  private createLambdaFunction(id: string, entry: string): NodejsFunction {
+    return new NodejsFunction(this, id, {
+      runtime: Runtime.NODEJS_18_X,
+      entry: entry,
       handler: 'handler'
     });
   }
 
-  private addLambdaUrl() {
-    const fetchFeatureCollectionUrl = this.fetchFeatureCollection.addFunctionUrl({
-      authType: lambda.FunctionUrlAuthType.NONE
+  // Add a URL to a lambda function.
+  private addLambdaUrl(nodejsFunction: NodejsFunction, outputName: string) {
+    const functionUrl = nodejsFunction.addFunctionUrl({
+      authType: FunctionUrlAuthType.NONE
     });
-
-    new cdk.CfnOutput(this, 'FunctionUrl', { value: fetchFeatureCollectionUrl.url });
+    new cdk.CfnOutput(this, outputName, { value: functionUrl.url });
   }
 }
