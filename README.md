@@ -12,14 +12,14 @@ This repository includes the interview assessment task, which covers the creatio
 - [Error Messages](#error-messages)
 - [CustomError Class](#customerror-class)
 - [Functions](#functions)
-    - [raiseError](#raiseerror)
-    - [validateAddress](#validateaddress)
-    - [callApi](#callapi)
-    - [fetchAddressData](#fetchAddressdata)
-    - [extractCoordinates](#extractcoordinates)
-    - [fetchInformation](#fetchinformation)
-    - [fetchAdministrativeBoundaries](#fetchadministrativeBoundaries)
-    - [handler](#handler)
+    - [raiseError(errCode, errDesc)](#raiseerrorerrcode-errdesc)
+    - [validateAddress(address)](#validateaddressaddress)
+    - [callApi(url)](#callapiurl)
+    - [fetchAddressData(address)](#fetchaddressdataaddress)
+    - [extractCoordinates(response)](#extractcoordinatesresponse)
+    - [fetchInformation(coord, urlConfig, propName)](#fetchinformationcoord-urlconfig-propname)
+    - [fetchAdministrativeBoundaries(coordinates, url, propName, errorMessage)](#fetchadministrativeboundariescoordinates-url-propname-errormessage)
+    - [handler(event)](#handlerevent)
 - [Testing the Function](#testing-the-function)
     - [Test Cases with Real Data](#test-cases-with-real-data)
         - [Test Case 1: Valid Address](#test-case-1-valid-address)
@@ -73,8 +73,7 @@ The code defines a custom error class `CustomError` that extends the `Error` cla
 
 ## FUNCTIONS
 
-### raiseError
-(errCode, errDesc)
+### raiseError(errCode, errDesc)
 
 This function is used to raise an error with the specified error code and description. It throws an instance of the `CustomError` class.
 
@@ -84,8 +83,7 @@ This function is used to raise an error with the specified error code and descri
 - Throws:
     - `CustomError`: An instance of the `CustomError` class.
 
-### validateAddress
-(address)
+### validateAddress(address)
 
 This function is used to validate the address parameter from users. It checks if the address is provided and if it contains any special characters. It returns the uppercase version of the address if it passes the validation.
 
@@ -97,8 +95,7 @@ This function is used to validate the address parameter from users. It checks if
     - `CustomError` with the error code 400 and description `ERROR_MESSAGES.BAD_REQUEST_ADDRESS` if the address parameter is missing.
     - `CustomError` with the error code 400 and description `ERROR_MESSAGES.BAD_REQUEST_SPECIAL_CHARS` if the address contains special characters.
 
-### callApi
-(url)
+### callApi(url)
 
 This function is used to make an HTTP request using axios. It sends a GET request to the specified URL and returns the response data.
 
@@ -110,8 +107,7 @@ This function is used to make an HTTP request using axios. It sends a GET reques
     - `CustomError` with the error code 400 and description `ERROR_MESSAGES.NO_FEATURES_FOUND` if no features are found in the response.
     - `CustomError` with the error code from the response or 500 and description from the response or `ERROR_MESSAGES.UNEXPECTED_ERROR` if an unexpected error occurs.
 
-### fetchAddressData
-(address)
+### fetchAddressData(address)
 
 This function is used to retrieve location information based on the input address. It calls the callApi function to make the HTTP request and returns the response data.
 
@@ -120,8 +116,7 @@ This function is used to retrieve location information based on the input addres
 - Returns:
     - The response data from the HTTP request made to the address point URL.
 
-### extractCoordinates
-(response)
+### extractCoordinates(response)
 
 This function is used to extract coordinates from the response. It iterates over the features in the response and checks if the addresses and coordinates are consistent. It returns an array of coordinates.
 
@@ -133,8 +128,7 @@ This function is used to extract coordinates from the response. It iterates over
     - `CustomError` with the error code 400 and description `ERROR_MESSAGES.ADDRESSES_NOT_SAME` if there are multiple features with different addresses.
     - `CustomError` with the error code 400 and description `ERROR_MESSAGES.MISSING_COORDINATES` if a feature does not have coordinates.
 
-### fetchInformation
-(coord, urlConfig, propName)
+### fetchInformation(coord, urlConfig, propName)
 
 This function is used to send HTTP calls to the specified URL and retrieve information from the response based on the coordinate. It calls the `callApi` function to make the HTTP request and returns the value of the specified property from the response.
 
@@ -145,8 +139,7 @@ This function is used to send HTTP calls to the specified URL and retrieve infor
 - Returns:
     - The value of the specified property from the response.
 
-### fetchAdministrativeBoundaries
-(coordinates, url, propName, errorMessage)
+### fetchAdministrativeBoundaries(coordinates, url, propName, errorMessage)
 
 This function is used to extract suburb names and state electoral district names. It sends an HTTP call with each coordinate and compares the responses. If there are multiple responses, it returns an error.
 
