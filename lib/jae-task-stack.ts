@@ -9,12 +9,12 @@ export class JaeTaskStack extends cdk.Stack {
     super(scope, id, props);
 
     // Create lambda functions.
-    const fetchFeatureCollection = this.createLambdaFunction('FetchFeatureCollectionLambda', './lib/lambda/index.js');
-    const returnTestData = this.createLambdaFunction('ReturnTestDataLambda', './lib/testLambda/index.js');
+    const returnSpatialInfo = this.createLambdaFunction('ReturnSpatialInfoLambda', './lib/lambda/index.js');
+    const testWithMockData = this.createLambdaFunction('TestWithMockDataLambda', './lib/testLambda/index.js');
     
     // Add a URL to the lambda functions.
-    this.addLambdaUrl(fetchFeatureCollection, 'FunctionUrlFetchFeatureCollection');
-    this.addLambdaUrl(returnTestData, 'FunctionUrlReturnTestData');
+    this.addLambdaUrl(returnSpatialInfo, 'FunctionUrlReturnSpatialInfo');
+    this.addLambdaUrl(testWithMockData, 'FunctionUrlTestWithMockData');
   }
 
   // Create a Node.js lambda function.

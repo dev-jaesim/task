@@ -169,11 +169,11 @@ This is the main handler function that is exported for the Lambda function. It h
 
 ### Test Cases with Real Data
 
-**Test URL:** `https://xcq657bzcyeygwm4ioc3r7l5ju0dafsq.lambda-url.ap-southeast-2.on.aws/query?address=`
+**Test URL:** `https://pyzbp2xd76vpj5iscer4bagady0aqita.lambda-url.ap-southeast-2.on.aws/query?address=`
 
 You can use the above URL to conduct tests with real address data.
 
-**Example:** `https://xcq657bzcyeygwm4ioc3r7l5ju0dafsq.lambda-url.ap-southeast-2.on.aws/query?address=346 Panorama Avenue Bathurst`
+**Example:** `https://pyzbp2xd76vpj5iscer4bagady0aqita.lambda-url.ap-southeast-2.on.aws/query?address=346 Panorama Avenue Bathurst`
 
 The Lambda returns:
 - Location (latitude and longitude)
@@ -183,27 +183,27 @@ The Lambda returns:
 `{"location":[[149.56705027261992,-33.42968429289573,0]],"suburbName":"BATHURST","stateElectoralDistrictName":"BATHURST"}`
 
 #### Test Case 1: Valid Address
-- **Test URL:** `https://xcq657bzcyeygwm4ioc3r7l5ju0dafsq.lambda-url.ap-southeast-2.on.aws/query?address=79 Albert Avenue Chatswood`
+- **Test URL:** `https://pyzbp2xd76vpj5iscer4bagady0aqita.lambda-url.ap-southeast-2.on.aws/query?address=79 Albert Avenue Chatswood`
 - **Expected Result:** Pass
 - **Expected Return:** `{"location":[[151.17981755102406,-33.798662882572586,0]],"suburbName":"CHATSWOOD","stateElectoralDistrictName":"WILLOUGHBY"}`
 
 #### Test Case 2: Invalid Address
-- **Test URL:** `https://xcq657bzcyeygwm4ioc3r7l5ju0dafsq.lambda-url.ap-southeast-2.on.aws/query?address=4883 Albert Avenue Chatswood`
+- **Test URL:** `https://pyzbp2xd76vpj5iscer4bagady0aqita.lambda-url.ap-southeast-2.on.aws/query?address=4883 Albert Avenue Chatswood`
 - **Expected Result:** Fail
 - **Expected Return:** `{"error":{"code":400,"message":"No address found in the response."}}`
 
 #### Test Case 3: Special Character
-- **Test URL:** `https://xcq657bzcyeygwm4ioc3r7l5ju0dafsq.lambda-url.ap-southeast-2.on.aws/query?address=4883! Albert Avenue Chatswood*`
+- **Test URL:** `https://pyzbp2xd76vpj5iscer4bagady0aqita.lambda-url.ap-southeast-2.on.aws/query?address=4883! Albert Avenue Chatswood*`
 - **Expected Result:** Fail
 - **Expected Return:** `{"error":{"code":400,"message":"Bad Request: Address cannot include any special characters."}}`
 
 #### Test Case 4: No Query String
-- **Test URL:** `https://xcq657bzcyeygwm4ioc3r7l5ju0dafsq.lambda-url.ap-southeast-2.on.aws`
+- **Test URL:** `https://pyzbp2xd76vpj5iscer4bagady0aqita.lambda-url.ap-southeast-2.on.aws`
 - **Expected Result:** Fail
 - **Expected Return:** `{"error":{"code":400,"message":"Bad Request: Missing query string parameters."}}`
 
 #### Test Case 5: No Address Parameter
-- **Test URL:** `https://xcq657bzcyeygwm4ioc3r7l5ju0dafsq.lambda-url.ap-southeast-2.on.aws/query?name=jae`
+- **Test URL:** `https://pyzbp2xd76vpj5iscer4bagady0aqita.lambda-url.ap-southeast-2.on.aws/query?name=jae`
 - **Expected Result:** Fail
 - **Expected Return:** `{"error":{"code":400,"message":"Bad Request: Address parameter is required."}}`
 
@@ -219,7 +219,7 @@ I haven't been able to find an address that returns multiple features with diffe
 
 You can view the mock data at this URL: `https://github.com/dev-jaesim/task/blob/master/lib/testLambda/testInput.js`
 
-**Test URL:** `https://ilnn6odc7uqbuwzfoc43tkxo6u0aycwl.lambda-url.ap-southeast-2.on.aws/query?test=`
+**Test URL:** `https://kyx5gbc4r4grcvorvwxfdtjpje0eqqay.lambda-url.ap-southeast-2.on.aws/query?test=`
 
 - **ADDRESSES_NOT_SAME:** Multiple features returned have differing property addresses.
 - **MISSING_COORDINATES:** A feature is returned without coordinates.
@@ -227,21 +227,21 @@ You can view the mock data at this URL: `https://github.com/dev-jaesim/task/blob
 - **DISTRICTS_NOT_SAME:** Multiple features with different coordinates have varying state electoral district names. If they have different coordinates but the same district names, no error is returned for the district name.
 
 #### Test Case 1: ADDRESSES_NOT_SAME
-- **Test URL:** `https://ilnn6odc7uqbuwzfoc43tkxo6u0aycwl.lambda-url.ap-southeast-2.on.aws/query?test=ADDRESSES_NOT_SAME`
+- **Test URL:** `https://kyx5gbc4r4grcvorvwxfdtjpje0eqqay.lambda-url.ap-southeast-2.on.aws/query?test=ADDRESSES_NOT_SAME`
 - **Expected Result:** Fail
 - **Expected Return:** `{"result":{"testResult":"Fail","testInput":{"features":[{"geometry":{"type":"Point","coordinates":[151.120905738247,-33.7793283220411,0]},"properties":{"address":"101 WATERLOO ROAD MACQUARIE PARK"}},{"geometry":{"type":"Point","coordinates":[151.121508951571,-33.7787488547674,0]},"properties":{"address":"101 WATERLOO STREET MACQUARIE PARK"}}]},"test":"Multiple features from NSW_Geocoded_Addressing_Theme have different addresses."}}`
 
 #### Test Case 2: MISSING_COORDINATES
-- **Test URL:** `https://ilnn6odc7uqbuwzfoc43tkxo6u0aycwl.lambda-url.ap-southeast-2.on.aws/query?test=MISSING_COORDINATES`
+- **Test URL:** `https://kyx5gbc4r4grcvorvwxfdtjpje0eqqay.lambda-url.ap-southeast-2.on.aws/query?test=MISSING_COORDINATES`
 - **Expected Result:** Fail
 - **Expected Return:** `{"result":{"testResult":"Fail","testInput":{"features":[{"geometry":{"type":"Point"},"properties":{"address":"101 WATERLOO ROAD MACQUARIE PARK"}}]},"test":"A feature from NSW_Geocoded_Addressing_Theme is missing coordinates."}}`
 
 #### Test Case 3: SUBURBS_NOT_SAME
-- **Test URL:** `https://ilnn6odc7uqbuwzfoc43tkxo6u0aycwl.lambda-url.ap-southeast-2.on.aws/query?test=SUBURBS_NOT_SAME`
+- **Test URL:** `https://kyx5gbc4r4grcvorvwxfdtjpje0eqqay.lambda-url.ap-southeast-2.on.aws/query?test=SUBURBS_NOT_SAME`
 - **Expected Result:** Fail
 - **Expected Return:** `{"result":{"testResult":"Fail","testInput":{"features":[{"geometry":{"type":"Point","coordinates":[151.120905738247,-33.7793283220411,0]},"properties":{"address":"101 WATERLOO ROAD MACQUARIE PARK"}},{"geometry":{"type":"Point","coordinates":[151.179817551024,-33.7986628825726,0]},"properties":{"address":"101 WATERLOO ROAD MACQUARIE PARK"}}],"coordinates":[[151.120905738247,-33.7793283220411,0],[151.179817551024,-33.7986628825726,0]]},"test":"Different suburb names for the same address.","initialSuburb":"MACQUARIE PARK","currentSuburb":"CHATSWOOD"}}`
 
 #### Test Case 4: DISTRICTS_NOT_SAME
-- **Test URL:** `https://ilnn6odc7uqbuwzfoc43tkxo6u0aycwl.lambda-url.ap-southeast-2.on.aws/query?test=DISTRICTS_NOT_SAME`
+- **Test URL:** `https://kyx5gbc4r4grcvorvwxfdtjpje0eqqay.lambda-url.ap-southeast-2.on.aws/query?test=DISTRICTS_NOT_SAME`
 - **Expected Result:** Fail
 - **Expected Return:** `{"result":{"testResult":"Fail","testInput":{"features":[{"geometry":{"type":"Point","coordinates":[151.120905738247,-33.7793283220411,0]},"properties":{"address":"101 WATERLOO ROAD MACQUARIE PARK"}},{"geometry":{"type":"Point","coordinates":[151.179817551024,-33.7986628825726,0]},"properties":{"address":"101 WATERLOO ROAD MACQUARIE PARK"}}],"coordinates":[[151.120905738247,-33.7793283220411,0],[151.179817551024,-33.7986628825726,0]]},"test":"Different district names for the same address.","initialDistrict":"RYDE","currentDistrict":"WILLOUGHBY"}}`
